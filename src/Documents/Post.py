@@ -18,6 +18,7 @@ class Post(MDDocument):
 
 
     def write(self, template: str, aliases: Dict[str, str]) -> str:
+        self._addToBoard("...")
         return template # stub
 
 

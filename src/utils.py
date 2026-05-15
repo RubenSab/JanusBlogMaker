@@ -2,6 +2,8 @@ import shutil
 from pathlib import Path
 from typing import Dict
 
+import markdown
+
 from src.Documents.MDDocument import MDDocument
 
 
@@ -13,12 +15,12 @@ def mirrored_abspath(abspath: Path, input_dir_abspath: Path, output_dir_abspath:
     return new_path
 
 
-def convert_aliased_md_to_html(md: str, aliases_dict: Dict[str, str]) -> str:
-    return md # stub
+def convert_aliased_md_to_html(md: str, aliases: Dict[str, str], invoked_obj) -> str:
+    return replace_aliases_in_html(markdown.markdown(md), aliases, invoked_obj)
 
 
-def replace_aliases(source_text: str, aliases: Dict[str, str], invoked_obj: MDDocument) -> str:
-    pass
+def replace_aliases_in_html(source_text: str, aliases: Dict[str, str], invoked_obj: MDDocument) -> str:
+    return "test" # stub
 
 
 def remove_recursive(path: Path) -> None:

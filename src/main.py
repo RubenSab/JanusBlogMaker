@@ -17,12 +17,14 @@ def recursive_visit(path: Path, MD_not_to_convert: Set[Path], template: str, ali
         )
         for child in path.iterdir():
             recursive_visit(child, MD_not_to_convert, template, aliases)
+
     # if the file is a MD post not to ignore, convert its content and mirror it
     elif path.is_file() and path.suffix.lower() == '.md' and path not in MD_not_to_convert:
         current_post = Post(path.read_text(), path)
         utils.mirrored_abspath(path, input_root_abspath, output_root_abspath).write_text(
             current_post.write(template, aliases)
         )
+
     # else mirror the file in the output tree
     else:
         shutil.copy(path, utils.mirrored_abspath(path, input_root_abspath, output_root_abspath))
@@ -53,26 +55,20 @@ if "__main__" == __name__:
     # create empty Board objects
     boards = []
     for board_path in Path(input_root_abspath / "boards").iterdir():
-        boards.append(
-            Board(
-                utils.convert_aliased_md_to_html(
-                    board_path.read_text(),
-                    aliases_dict
-                ),
-                board_path
-            )
-        )
+        boards.append(Board(board_path.read_text(), board_path))
 
     # convert index.md into index.html, or mirror it if it's already .html
     index_md_abspath = input_root_abspath / "index.md"
     index_html_abspath = input_root_abspath / "index.html"
     if Path(index_md_abspath).is_file():
         utils.mirrored_abspath(
-            index_md_abspath,
-            input_root_abspath,
-            output_root_abspath
+            index_md_abspath, input_root_abspath, output_root_abspath
         ).write_text(
-            utils.convert_aliased_md_to_html(index_md_abspath.read_text(), aliases_dict)
+            utils.convert_aliased_md_to_html(
+                index_md_abspath.read_text(),
+                aliases_dict,
+                Post(index_md_abspath.read_text(), index_md_abspath)
+            )
         )
     elif Path(index_html_abspath).is_file():
         output_path = utils.mirrored_abspath(
@@ -96,8 +92,6 @@ if "__main__" == __name__:
     Path(output_root_abspath / "boards").mkdir()
     for board in boards:
         output_path = utils.mirrored_abspath(
-            board.path,
-            input_root_abspath,
-            output_root_abspath
+            board.path, input_root_abspath, output_root_abspath
         )
         output_path.write_text(board.write(board_template, aliases_dict))
