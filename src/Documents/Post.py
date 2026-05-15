@@ -18,7 +18,7 @@ class Post(MDDocument):
 
 
     def write(self, template: str, aliases: Dict[str, str]) -> str:
-        pass
+        return template # stub
 
 
     def writePostlet(self, template: str) -> str:

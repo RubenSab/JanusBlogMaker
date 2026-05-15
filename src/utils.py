@@ -25,12 +25,12 @@ def remove_recursive(path: Path) -> None:
     if path.is_dir():
         shutil.rmtree(path)
 
-def remove_and_copy_recursive(src: Path, dest: Path) -> Path:
+def remove_old_recursive_and_copy_recursive(src: Path, dest: Path) -> Path:
     remove_recursive(dest)
     shutil.copytree(src, dest)
     return dest
 
-def remove_and_copy(src: Path, dest: Path) -> Path:
+def remove_old_recursive_and_mkdir(dest: Path) -> Path:
     remove_recursive(dest)
-    shutil.copy(src, dest)
+    dest.mkdir()
     return dest
