@@ -76,7 +76,9 @@ if "__main__" == __name__:
             input_root_abspath,
             output_root_abspath
         )
-        utils.remove_old_recursive_and_copy(index_html_abspath, output_path)
+        if output_path.is_file():
+            output_path.unlink()
+        shutil.copy(index_html_abspath, output_path)
 
     # mirror stylesheets
     utils.remove_old_recursive_and_copy_recursive(
