@@ -1,7 +1,7 @@
 {
   "[BACK TO INDEX FROM BOARD]": "<a href=\"../index.html\" class=\"back-link\">Back to home</a>",
   "[BACK TO PARENT BOARDS]": "{UTILITY:BACKLINKS_TO_BOARDS}",
-  "[POST HEADER]": "<div class=\"header\"><div class=\"thumbnail\"><img src={THUMBNAIL} alt=\"thumbnail\"></div><div class=\"title\"><h1>{TITLE}</h1></div><div class=\"date\">{CREATED}</div></div>"
+  "[POST HEADER]": "<div class=\"header\"><div class=\"thumbnail\"><img src={THUMBNAIL} alt=\"thumbnail\"></div><div class=\"title\"><h1>{TITLE}</h1></div><div class=\"date\">{CREATED}</div></div>",
   "[GALLERY]": "<div class=\"gallery\">",
   "[END DIV]": "</div>"
 }

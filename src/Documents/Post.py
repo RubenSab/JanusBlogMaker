@@ -23,3 +23,7 @@ class Post(MDDocument):
 
     def writePostlet(self, template: str) -> str:
         pass
+
+
+    def _addToBoard(self, board_name: str):
+        pass

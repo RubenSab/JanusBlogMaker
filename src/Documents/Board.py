@@ -12,4 +12,4 @@ class Board(MDDocument):
 
 
     def write(self, template: str, aliases: Dict[str, str]) -> str:
-        pass
+        return template # stub
