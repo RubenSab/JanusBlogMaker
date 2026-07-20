@@ -1,0 +1,3 @@
+- fix p wrappers around aliases
+- fix paths and calling site dynamic behaviour in Post.get_html
+- make hardcoded names constants

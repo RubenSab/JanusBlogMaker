@@ -1,0 +1,6 @@
+[POST HEADER]: <div class="header"><div class="thumbnail"><img src="{THUMBNAIL}" alt="Thumbnail"></div><div class="title"><h1>{TITLE}</h1></div><div class="date">{CREATED}</div></div>
+[BACKLINK]: <a href="../../index.html" class="back-link">Go back</a>
+[BACK TO BOARD]: <a href="../../boards/{FIRST_BOARD}.html" class="back-link">Back to {FIRST_BOARD}</a>
+[BACK TO INDEX]: <a href="../index.html" class="back-link">Back to index</a>
+[GALLERY]: <div class=\"gallery\">
+[END DIV]: </div>
