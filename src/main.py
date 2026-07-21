@@ -15,5 +15,11 @@ def main(input: str, output: str, verbose=False):
     janus = BlogBuilder(input, output)
     janus.translate_blog()
 
-if __name__ == '__main__':
+def cli():
+    """
+    CLI entry point
+    """
     plac.call(main)
+
+if __name__ == '__main__':
+    cli()
