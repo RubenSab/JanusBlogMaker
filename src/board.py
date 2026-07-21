@@ -1,7 +1,4 @@
-from pathlib import Path
-
-from src.context import Context
-from src.post import Post
+from post import Post
 
 
 class Board:

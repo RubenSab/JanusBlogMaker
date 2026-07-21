@@ -1,9 +1,9 @@
 import shutil
 from pathlib import Path
 
-from src.board import Board
-from src.context import Context
-from src.post import Post
+from board import Board
+from context import Context
+from post import Post
 
 
 class BlogBuilder:

@@ -2,7 +2,7 @@ from pathlib import Path
 
 import markdown2
 
-from src.context import Context
+from context import Context
 
 
 class Post:

@@ -1,8 +1,19 @@
-# Copia ricorsivamente context e not_translated nell'output
-# Crea le directory content, content/posts e content/boards nell'output
-# Per ogni directory in posts, traduci il post da md a html, passando al nuovo Post la directory in cui è contenuto.
-# Per ogni directory in boards, traduci la board da md a html, passando alla nuova Board la directory in cui è contenuto.
-from src.blog_builder import BlogBuilder
+from blog_builder import BlogBuilder
 
-janus = BlogBuilder('/home/ruben/JanusBlogMaker/blog/input', '/home/ruben/JanusBlogMaker/blog/output')
-janus.translate_blog()
+import plac
+
+@plac.opt('input', help="input root directory", type=str, abbrev='i')
+@plac.opt('output', help="output root directory", type=str, abbrev='o')
+@plac.flg('verbose', help="verbose mode", abbrev='v')
+def main(input: str, output: str, verbose=False):
+    """
+    Janus Blog Maker
+    :param input: input root directory
+    :param output: output root directory
+    :param verbose: verbose mode
+    """
+    janus = BlogBuilder(input, output)
+    janus.translate_blog()
+
+if __name__ == '__main__':
+    plac.call(main)
