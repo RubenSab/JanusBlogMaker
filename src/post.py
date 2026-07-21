@@ -48,7 +48,6 @@ class Post:
         full_html = self.context.templates[template_name]
         # convert MD content to HTML
         full_html = full_html.replace('{BODY}', self.convert(self.md_body))
-        # translate aliases
         for alias in self.context.aliases_dict:
             full_html = full_html.replace(alias, self.context.aliases_dict[alias])
         # translate every {self.property} found to its value
@@ -84,7 +83,7 @@ class Post:
                     for css in self.properties['css']
                 ])
             )
-        return full_html
+        return full_html.replace('\\"', '"') # TODO clean
 
     def convert(self, md: str):
-        return markdown2.markdown(md, extras=['code-friendly', 'cuddled-lists', 'tables'], safe_mode=False)
+        return markdown2.markdown(md, extras=['code-friendly', 'cuddled-lists', 'tables', 'raw-html'], safe_mode=False)
