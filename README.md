@@ -10,7 +10,6 @@ A Python utility that generates a full HTML + CSS blog with multiple boards of p
 git clone https://github.com/RubenSab/JanusBlogMaker
 cd JanusBlogMaker
 pip install -e .
-janus -i /home/ruben/JanusBlogMaker/blog/input -o /home/ruben/JanusBlogMaker/blog/output
 ```
 
 # Usage
@@ -33,5 +32,5 @@ options:
 Example
 
 ```commandline
-janus -i /home/ruben/JanusBlogMaker/blog/input -o /home/ruben/JanusBlogMaker/blog/output
+janus -i blog_example/input -o blog_example/output
 ```

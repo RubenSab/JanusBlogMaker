@@ -8,8 +8,8 @@ from post import Post
 
 class BlogBuilder:
     def __init__(self, input_root: Path, output_root: Path):
-        self.input_root = Path(input_root)
-        self.output_root = Path(output_root)
+        self.input_root = Path(input_root).absolute()
+        self.output_root = Path(output_root).absolute()
 
     def translate_blog(self):
         # init Context

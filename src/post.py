@@ -47,9 +47,13 @@ class Post:
     def get_html(self, template_name = 'post', called_from_board = False):
         full_html = self.context.templates[template_name]
         # convert MD content to HTML
-        full_html = full_html.replace('{BODY}', self.convert(self.md_body))
+        aliased_md_body = self.convert(self.md_body)
+        for alias in self.context.aliases_dict:
+            aliased_md_body = aliased_md_body.replace(alias, self.context.aliases_dict[alias])
+        full_html = full_html.replace('{BODY}', aliased_md_body)
         for alias in self.context.aliases_dict:
             full_html = full_html.replace(alias, self.context.aliases_dict[alias])
+        full_html = full_html.encode().decode('unicode_escape') # to convert \n in newline
         # translate every {self.property} found to its value
         if self.properties['boards']:
             full_html = full_html.replace('{FIRST_BOARD}', self.properties['boards'][0])
@@ -62,11 +66,11 @@ class Post:
             '{POST PATH}',
             '../' + str(Path('posts') / self.dir_name / self.post_name) + '.html'
         ) # TODO clean
-        if called_from_board:
+        if self.properties['thumbnail'] is not None and called_from_board:
             full_html = full_html.replace(
                 '{THUMBNAIL}',
                 str(Path('..') / 'posts' / self.dir_name / self.properties['thumbnail'])
-            ) # TODO clean
+            )  # TODO clean
         for prop, value in self.properties.items():
             if value is not None and prop != 'css' \
                     and (isinstance(value, str) or isinstance(value, Path)):
@@ -86,4 +90,4 @@ class Post:
         return full_html.replace('\\"', '"') # TODO clean
 
     def convert(self, md: str):
-        return markdown2.markdown(md, extras=['code-friendly', 'cuddled-lists', 'tables', 'raw-html'], safe_mode=False)
+        return markdown2.markdown(md, extras=[], safe_mode=False)

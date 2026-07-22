@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+
 from blog_builder import BlogBuilder
 
 import plac
@@ -12,6 +15,17 @@ def main(input: str, output: str, verbose=False):
     :param output: output root directory
     :param verbose: verbose mode
     """
+    if not input:
+        print("Error: input root directory is required (-i/--input)", file=sys.stderr)
+        print(main.__doc__ if main.__doc__ else "Usage: ...")
+        sys.exit(1)
+    if not output:
+        print("Error: output root is required (-o/--output)", file=sys.stderr)
+        print(main.__doc__ if main.__doc__ else "Usage: ...")
+        sys.exit(1)
+    if not Path.is_dir(input):
+        print(f"Error: Input directory '{input}' does not exist", file=sys.stderr)
+        sys.exit(1)
     janus = BlogBuilder(input, output)
     janus.translate_blog()
 
