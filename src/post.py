@@ -22,11 +22,8 @@ class Post:
 
     def extract_properties(self):
         for i, line in enumerate(self.md_text.splitlines()):
-            line = line.strip()
-            if line == '---':
-                self.md_body = '\n'.join([
-                    l.strip() for l in self.md_text.splitlines()[i + 1:]
-                ])
+            if line.strip() == '---':
+                self.md_body = '\n'.join(self.md_text.splitlines()[i + 1:])
                 break
             if not line or ':' not in line:
                 continue
@@ -52,7 +49,7 @@ class Post:
         full_html = full_html.replace('{BODY}', aliased_md_body)
         for alias in self.context.aliases_dict:
             full_html = full_html.replace(alias, self.context.aliases_dict[alias])
-        full_html = full_html.replace("\\n", "\n")  # necessary, see line 77
+        full_html = full_html.replace("\\n<", "\n<")  # necessary, see line 74
         # translate every {self.property} found to its value
         if self.properties['boards']:
             full_html = full_html.replace('{FIRST_BOARD}', self.properties['boards'][0])
@@ -87,9 +84,9 @@ class Post:
                 ])
             )
         full_html = full_html.replace('\\"', '"') # TODO clean
-        full_html = full_html.replace("\\n", "\n") # to convert \n in newline
-        full_html = full_html.replace("\\t", "\t") # to convert \t in tab
+        full_html = full_html.replace("\\n<", "\n<") # to convert \n in newline
+        full_html = full_html.replace("\\t<", "\t<") # to convert \n in newline
         return full_html
 
     def convert(self, md: str):
-        return markdown.markdown(md, extensions=['attr_list'])
+        return markdown.markdown(md, extensions=['attr_list', 'fenced_code'])

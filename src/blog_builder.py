@@ -26,11 +26,11 @@ class BlogBuilder:
         if (Path(self.input_root) / 'index.html').is_file():
             shutil.copy(self.input_root / 'index.html', self.output_root / 'index.html')
         else:
-            with open(self.input_root / 'index.md', 'r') as f:
+            with open(self.input_root / 'index.md', 'r', encoding='utf-8') as f:
                 index = Post(f.read(), self.input_root, 'index', context)
                 index.extract_properties()
                 html = index.get_html()
-            with open(self.output_root / 'index.html', 'w') as f:
+            with open(self.output_root / 'index.html', 'w', encoding='utf-8') as f:
                 f.write(html)
 
         shutil.copytree(
@@ -51,13 +51,13 @@ class BlogBuilder:
                 (self.output_root / 'posts' / post_dir.name).mkdir(parents=True, exist_ok=True)
                 for post_file in post_dir.iterdir():
                     if post_file.suffix == '.md':
-                        with open(self.input_root / 'posts' / post_dir.name / post_file.name, 'r') as f:
+                        with open(self.input_root / 'posts' / post_dir.name / post_file.name, 'r', encoding='utf-8') as f:
                             post = Post(f.read(), post_dir.name, post_file.name, context)
                             post.extract_properties()
                             if post.get_board_names():
                                 for board_name in post.get_board_names():
                                     boards[board_name].add_post(post)
-                        with open(self.output_root / 'posts' / post_dir.name / (post_file.stem + '.html'), 'w') as f:
+                        with open(self.output_root / 'posts' / post_dir.name / (post_file.stem + '.html'), 'w', encoding='utf-8') as f:
                             f.write(post.get_html())
                     else:
                         src = post_dir / post_file
@@ -76,11 +76,11 @@ class BlogBuilder:
         for file in (self.input_root / 'boards').iterdir():
             if file.suffix == '.md':
                 board = boards[file.stem]
-                with open(self.input_root / 'boards' / file, 'r') as f:
+                with open(self.input_root / 'boards' / file, 'r', encoding='utf-8') as f:
                     post = Post(f.read(), self.input_root / 'boards', file, context)
                     board.init_board_post(post)
                     html = board.get_html()
-                with open(self.output_root / 'boards' / (file.stem + '.html'), 'w') as f:
+                with open(self.output_root / 'boards' / (file.stem + '.html'), 'w', encoding='utf-8') as f:
                     f.write(html)
             elif file.is_dir():
                 shutil.copytree(file, self.output_root / 'boards' / file.name, dirs_exist_ok=True)
