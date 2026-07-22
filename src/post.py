@@ -1,8 +1,6 @@
 from pathlib import Path
 
 import markdown
-from markdown.extensions.attr_list import AttrListExtension
-
 from context import Context
 
 

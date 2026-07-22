@@ -23,7 +23,7 @@ class BlogBuilder:
         }
         # build the output/ tree
         Path(self.output_root).mkdir(parents=True, exist_ok=True)
-        if 'index.html' in Path(self.input_root).iterdir():
+        if (Path(self.input_root) / 'index.html').is_file():
             shutil.copy(self.input_root / 'index.html', self.output_root / 'index.html')
         else:
             with open(self.input_root / 'index.md', 'r') as f:
@@ -60,10 +60,16 @@ class BlogBuilder:
                         with open(self.output_root / 'posts' / post_dir.name / (post_file.stem + '.html'), 'w') as f:
                             f.write(post.get_html())
                     else:
-                        shutil.copy(
-                            post_dir / post_file,
-                            self.output_root / 'posts' / post_dir.name / post_file.name
-                        )
+                        src = post_dir / post_file
+                        dst = self.output_root / 'posts' / post_dir.name / post_file.name
+
+                        if src.is_dir():
+                            shutil.copytree(src, dst, dirs_exist_ok=True)
+                        elif src.is_file():
+                            shutil.copy(src, dst)
+                        else:
+                            dst.parent.mkdir(parents=True, exist_ok=True)
+                            shutil.copy2(src, dst)
             else:
                 shutil.copy(post_dir, self.output_root / post_dir.name)
         # for each board file, translate it
@@ -77,6 +83,6 @@ class BlogBuilder:
                 with open(self.output_root / 'boards' / (file.stem + '.html'), 'w') as f:
                     f.write(html)
             elif file.is_dir():
-                shutil.copytree(file, self.output_root / 'boards' / file.name)
+                shutil.copytree(file, self.output_root / 'boards' / file.name, dirs_exist_ok=True)
             else:
                 shutil.copy(file, self.output_root / 'boards' / file.name)

@@ -32,5 +32,5 @@ options:
 Example
 
 ```commandline
-janus -i blog_example/input -o blog_example/output
+janusBM -i blog_example/input -o blog_example/output
 ```
