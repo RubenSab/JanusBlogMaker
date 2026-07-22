@@ -9,10 +9,10 @@ css: post
 Look at those photos!
 
 [GALLERY]
-![first](1.JPG)
+![first](3.JPG){class="landscape"}
 ![second](2.JPG)
-![third](3.JPG)
-![fourth](4.JPG)
+![third](1.JPG){class="portrait"}
+![fourth](4.JPG){class="landscape"}
 [END DIV]
 
 Do you like them?

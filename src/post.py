@@ -1,6 +1,7 @@
 from pathlib import Path
 
-import markdown2
+import markdown
+from markdown.extensions.attr_list import AttrListExtension
 
 from context import Context
 
@@ -90,4 +91,4 @@ class Post:
         return full_html.replace('\\"', '"') # TODO clean
 
     def convert(self, md: str):
-        return markdown2.markdown(md, extras=[], safe_mode=False)
+        return markdown.markdown(md, extensions=['attr_list'])
