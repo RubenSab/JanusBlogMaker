@@ -52,7 +52,7 @@ class Post:
         full_html = full_html.replace('{BODY}', aliased_md_body)
         for alias in self.context.aliases_dict:
             full_html = full_html.replace(alias, self.context.aliases_dict[alias])
-        full_html = full_html.encode().decode('unicode_escape') # to convert \n in newline
+        full_html = full_html.replace("\\n", "\n")  # necessary, see line 77
         # translate every {self.property} found to its value
         if self.properties['boards']:
             full_html = full_html.replace('{FIRST_BOARD}', self.properties['boards'][0])
@@ -86,7 +86,10 @@ class Post:
                     for css in self.properties['css']
                 ])
             )
-        return full_html.replace('\\"', '"') # TODO clean
+        full_html = full_html.replace('\\"', '"') # TODO clean
+        full_html = full_html.replace("\\n", "\n") # to convert \n in newline
+        full_html = full_html.replace("\\t", "\t") # to convert \t in tab
+        return full_html
 
     def convert(self, md: str):
         return markdown.markdown(md, extensions=['attr_list'])

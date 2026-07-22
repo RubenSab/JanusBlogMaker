@@ -18,6 +18,10 @@ class Board:
         static_html = self.board_post.get_html('board')
         overview_htmls = [
             post.get_html('overview', True)
-            for post in sorted(self.posts, key=lambda post: post.properties['created'], reverse=True)
+            for post in sorted(
+                self.posts,
+                key=lambda post: post.properties['created'][-2:] + post.properties['created'][3:5] + post.properties['created'][:2],
+                reverse=True
+            ) # TODO clean
         ]
         return static_html.replace('{OVERVIEWS}', '\n'.join(overview_htmls))
